@@ -21,6 +21,13 @@ struct ContentView: View {
                     Image(systemName: todo.isCompleted ? "record.circle": "circle")
                     Text(todo.title)
                         .strikethrough(todo.isCompleted)
+                        .foregroundColor(todo.isCompleted ? .gray : .black)
+                }
+                .onTapGesture {
+                    let todoIndex = todos.firstIndex {
+                        $0.id == todo.id
+                    }!
+                    todos[todoIndex].isCompleted.toggle()
                 }
             }
             .navigationTitle("Todos")
