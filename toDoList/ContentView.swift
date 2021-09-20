@@ -9,28 +9,24 @@ import SwiftUI
 
 struct ContentView: View {
     @State var todos = [
-        Todo(title: "Kill the dog", isCompleted: true),
-        Todo(title: "Eat the dog"),
-        Todo(title: "Hunt the dog")
+        ToDo(title: "Kill the dog", isCompleted: true),
+        ToDo(title: "Eat the dog"),
+        ToDo(title: "Hunt the dog")
         
     ]
     var body: some View {
         NavigationView{
-            List(todos) { todo in
-                HStack{
-                    Image(systemName: todo.isCompleted ? "record.circle": "circle")
-                    Text(todo.title)
-                        .strikethrough(todo.isCompleted)
-                        .foregroundColor(todo.isCompleted ? .gray : .black)
+            ZStack {
+                List {
+                    Section(header: Text("Not Done")) {
+                        ListOfTodosView(todos:$todos)
+                    }
+                    Section(header: Text("Done")) {
+                        
+                    }
                 }
-                .onTapGesture {
-                    let todoIndex = todos.firstIndex {
-                        $0.id == todo.id
-                    }!
-                    todos[todoIndex].isCompleted.toggle()
-                }
+                .navigationTitle("Todos")
             }
-            .navigationTitle("Todos")
         }
     }
 }
@@ -40,3 +36,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
